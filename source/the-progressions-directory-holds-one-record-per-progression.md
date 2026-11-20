@@ -1,8 +1,8 @@
-# The implementations directory holds one record per implementation
+# The progressions directory holds one record per progression
 
-**Trigger:** When creating or starting an experiment or feature, or writing or changing an implementation record
+**Trigger:** When creating or starting an experiment or feature, or writing or changing a progression record
 
-`slasher/local/implementations/` holds **implementation records**: one file per implementation, carrying how it started, where it is being worked, and what became of it. An implementation is a bounded unit of work with a lifecycle, and the record is a persisted, dated artifact kept after it concludes.
+`slasher/local/progressions/` holds **progression records**: one file per progression, carrying how it started, where it is being worked, and what became of it. A progression is a bounded unit of work with a lifecycle, and the record is a persisted, dated artifact kept after it concludes.
 
 **Two kinds, and a tag says which.** An **experiment** is tagged `[experiment]` and a **feature** is tagged `[feature]`. The tags are the ordinary square-bracket tags (see the a-record-may-be-categorized-with-square-bracket-tags rule). **They name what the work is, and no rule reads them to decide how it runs.**
 
@@ -10,7 +10,7 @@
 
 **As the engineer stated it:** change features and experiments so that both can have either an intent or a question. And: an intent can also bring a forecast and verdict.
 
-**Whether the work states a forecast is asked when the implementation is created, and whether it reaches a verdict is asked at its end. The lifecycle reads both.** The forecast question is put to the engineer when the implementation is created and recorded as a confirmation, beside the working location and the participation. Only work with a forecast is asked the verdict question, when its work is complete. Neither follows from the kind, or from whether the work opens with a question or an intent.
+**Whether the work states a forecast is asked when the progression is created, and whether it reaches a verdict is asked at its end. The lifecycle reads both.** The forecast question is put to the engineer when the progression is created and recorded as a confirmation, beside the working location and the participation. Only work with a forecast is asked the verdict question, when its work is complete. Neither follows from the kind, or from whether the work opens with a question or an intent.
 
 ## The record
 
@@ -18,26 +18,26 @@ Open with the **Question** or the **Intent**, then the setup:
 
 - a **`**State:**`** line
 - the **upstream branch** it merges into — `master` or another topic branch
-- the **implementation branch**
+- the **progression branch**
 - its **base**
-- the **working location** chosen when the implementation is created
-- **whether it states a forecast**, asked when the implementation is created, and the forecast where it states one
+- the **working location** chosen when the progression is created
+- **whether it states a forecast**, asked when the progression is created, and the forecast where it states one
 - **whether it reaches a verdict**, asked at the end of work with a forecast
 - a **`**Tags:**`** line carrying `[experiment]` or `[feature]`
 
 **Work with a forecast states it** — what is expected to happen — **before** the work. As the work proceeds it records what actually happened against that forecast, then the findings and any post-hoc misses. The outcomes the forecast did not account for are usually the most informative.
 
-**Work without a forecast states none of that.** There is no comparison against a forecast, and no findings or misses. It concludes Completed, unless the engineer concludes it with a verdict word, which any implementation can take.
+**Work without a forecast states none of that.** There is no comparison against a forecast, and no findings or misses. It concludes Completed, unless the engineer concludes it with a verdict word, which any progression can take.
 
-**Every record carries the confirmations the lifecycle required**, so the work's authority is auditable: the working-location selection, the attended-or-unattended selection, and the forecast selection, each at the implementation's creation, the verdict selection at the end where the work has a forecast, adding a worktree to work already under way, and branch deletion with worktree removal. **Work that reaches a verdict also records** the affirmation declaration, concluding a superseded one, and merging untested code.
+**Every record carries the confirmations the lifecycle required**, so the work's authority is auditable: the working-location selection, the attended-or-unattended selection, and the forecast selection, each at the progression's creation, the verdict selection at the end where the work has a forecast, adding a worktree to work already under way, and branch deletion with worktree removal. **Work that reaches a verdict also records** the affirmation declaration, concluding a superseded one, and merging untested code.
 
 ## The state
 
 **The state sits on a canonical `**State:**` line**, carrying one word and nothing else — `- **State:** Suspended`. It is written with the record, and changes as the record reaches another word. That line is the only authoritative statement of the state: the same words run through a record's prose freely, and nothing else in the file can be read as the state.
 
-**`new` creates the branch and writes the record `Open`.** `start` makes it `Active`, the in-progress state, as it is for an item. Where no implementation is in place, `start` creates the branch and writes the record `Active`. Absence is not a state, and a record without a line is a defect.
+**`new` creates the branch and writes the record `Open`.** `start` makes it `Active`, the in-progress state, as it is for an item. Where no progression is in place, `start` creates the branch and writes the record `Active`. Absence is not a state, and a record without a line is a defect.
 
-**The state words every implementation takes:**
+**The state words every progression takes:**
 
 - **Open** — the record and the branch exist, and the work has not started.
 - **Active** — the work is in progress.
@@ -45,10 +45,10 @@ Open with the **Question** or the **Intent**, then the setup:
 - **Suspended** — paused, not ended.
 - **Discontinued** — stopped, with no plan to do it. It is not current work, so the list of current work and the status line leave it out. What it recorded may be merged.
 - **Obsolete** — it lost its relevance over time, as the work moved past it with no one deciding.
-- **Superseded** — replaced by another implementation. The two records name the counterpart. An implementation can be superseded at any time, without first being suspended.
+- **Superseded** — replaced by another progression. The two records name the counterpart. A progression can be superseded at any time, without first being suspended.
 - **Abandoned** — dropped before concluding, by decision. Not merged, and the record is kept.
 
-**Deferred and Discontinued differ in intent.** A Deferred implementation is kept to do later. A Discontinued one has no plan to do it.
+**Deferred and Discontinued differ in intent.** A Deferred progression is kept to do later. A Discontinued one has no plan to do it.
 
 **The concluding words:**
 
@@ -57,56 +57,56 @@ Open with the **Question** or the **Intent**, then the setup:
 - **Refuted** — the question was disproven, or the intent was not met.
 - **Inconclusive** — it ran and gave no clear verdict either way.
 
-**Any implementation can take any concluding word, whether or not it has a forecast.** The engineer concludes it Affirmed, Refuted, or Inconclusive with `affirm`, `refute`, or `inconclusive`. **`complete` concludes an implementation without a forecast as Completed.** Where it has a forecast, the agent asks which concluding word it takes: Completed, Affirmed, Refuted, or Inconclusive.
+**Any progression can take any concluding word, whether or not it has a forecast.** The engineer concludes it Affirmed, Refuted, or Inconclusive with `affirm`, `refute`, or `inconclusive`. **`complete` concludes a progression without a forecast as Completed.** Where it has a forecast, the agent asks which concluding word it takes: Completed, Affirmed, Refuted, or Inconclusive.
 
-**Where the implementation is created for an item, the item takes `Implementation`**, and the two records name each other. When the implementation is Completed or Affirmed, the item takes its kind's concluding state. When it reaches another concluding state, or is set aside, the agent asks the engineer what state the item takes. See the the-items-directory-holds-one-file-per-item rule.
+**Where the progression is created for an item, the item takes `Progression`**, and the two records name each other. When the progression is Completed or Affirmed, the item takes its kind's concluding state. When it reaches another concluding state, or is set aside, the agent asks the engineer what state the item takes. See the the-items-directory-holds-one-file-per-item rule.
 
-**An item already on `master` takes each of these state changes on `master` too**, not only on the implementation's branch. Change the item's state line and write its log entry on `master`, with the same content as on the branch, so the two match when the branch merges. Contributors read `master`, so the items there show the state each item is in now.
+**An item already on `master` takes each of these state changes on `master` too**, not only on the progression's branch. Change the item's state line and write its log entry on `master`, with the same content as on the branch, so the two match when the branch merges. Contributors read `master`, so the items there show the state each item is in now.
 
 **As the engineer stated it:** The records already on master should be up to date, because contributors all have access to master, and will need to understand the correct and current state of items.
 
-**Any state but Open and Active can be taken back**, by `resume`, which returns the implementation to Active. What resuming a Completed implementation does to its merged branch is settled when it first occurs.
+**Any state but Open and Active can be taken back**, by `resume`, which returns the progression to Active. What resuming a Completed progression does to its merged branch is settled when it first occurs.
 
-**Where the engineer asks for an implementation to be concluded and names no state, the state is put to the engineer through the selection interface.** Each concluding state the implementation can take is an option. The agent does not choose the state, and does not conclude the implementation before the engineer selects one. *Conclude the feature* names no state. *The feature is completed* names one.
+**Where the engineer asks for a progression to be concluded and names no state, the state is put to the engineer through the selection interface.** Each concluding state the progression can take is an option. The agent does not choose the state, and does not conclude the progression before the engineer selects one. *Conclude the feature* names no state. *The feature is completed* names one.
 
 **As the engineer stated it:** When an item or an implementation is concluded without the engineer having given the concluding state, present the engineer with the state options using AskUserQuestion.
 
 ## Runs
 
-**Runs are optional and belong to work that reaches a verdict.** Split an implementation into runs only when its question or intent is held fixed and one factor is varied to compare. Each run is its own branch from the same base, carries its own forecast, and is titled `Run 1`, `Run 2`, and so on. A run is a deliberate variation, not a retry.
+**Runs are optional and belong to work that reaches a verdict.** Split a progression into runs only when its question or intent is held fixed and one factor is varied to compare. Each run is its own branch from the same base, carries its own forecast, and is titled `Run 1`, `Run 2`, and so on. A run is a deliberate variation, not a retry.
 
 ## It is the lifecycle record, not the design record
 
 **The same work's design belongs in a loop record** under `slasher/local/logs/loops/` — each cycle's hinge, the options put to the engineer, and the decision. The two divide by concern and each names the other.
 
-**They are separate files because of the package graph, and that is a refused dependency.** `slasher/local/logs/loops/` is contributed by `design-by-efferent`, which includes `foundation` rather than the reverse. A foundation rule requiring fields in that directory would invert the graph, and would make the implementation lifecycle unavailable to a project that installs `foundation` alone. Naming the loop record in prose is a **citation** and costs nothing.
+**They are separate files because of the package graph, and that is a refused dependency.** `slasher/local/logs/loops/` is contributed by `design-by-efferent`, which includes `foundation` rather than the reverse. A foundation rule requiring fields in that directory would invert the graph, and would make the progression lifecycle unavailable to a project that installs `foundation` alone. Naming the loop record in prose is a **citation** and costs nothing.
 
 ## Format
 
-The same frontmatter-free markdown as rules — a `# Experiment — <name>` or `# Feature — <name>` title, then prose and tables. **The kind reads in the title and is stated as data in the `**Tags:**` line**, and a record whose title says one kind and whose tag says another is a defect in the record. The filename takes the ISO-8601-UTC prefix (see the file-names rule), and no state (see the a-records-file-name-carries-no-state rule). End the file with the provenance footer, and pair it with a log entry (see the a-log-entry-is-written-for-an-implementation-record-and-the-concluding-entry-depends-on-whether-the-work-merged rule).
+The same frontmatter-free markdown as rules — a `# Experiment — <name>` or `# Feature — <name>` title, then prose and tables. **The kind reads in the title and is stated as data in the `**Tags:**` line**, and a record whose title says one kind and whose tag says another is a defect in the record. The filename takes the ISO-8601-UTC prefix (see the file-names rule), and no state (see the a-records-file-name-carries-no-state rule). End the file with the provenance footer, and pair it with a log entry (see the a-log-entry-is-written-for-a-progression-record-and-the-concluding-entry-depends-on-whether-the-work-merged rule).
 
-**Why:** an experiment and a feature share one lifecycle. What differs between two implementations is whether the work is judged against a forecast, and that is a decision about this piece of work rather than about its kind. A forecast recorded at creation keeps a verdict possible, and the verdict is decided at the end, when the work has shown what it shows. The kind keeps naming what the work is.
+**Why:** an experiment and a feature share one lifecycle. What differs between two progressions is whether the work is judged against a forecast, and that is a decision about this piece of work rather than about its kind. A forecast recorded at creation keeps a verdict possible, and the verdict is decided at the end, when the work has shown what it shows. The kind keeps naming what the work is.
 
-**How to apply:** record every implementation here, tagged `[experiment]` or `[feature]`. Open with the question or the intent, then the branch topology, the working location, and whether it states a forecast. Forecast before the work where the engineer gives one, and record what happened against it. Record the verdict selection at the end, where the work has a forecast.
+**How to apply:** record every progression here, tagged `[experiment]` or `[feature]`. Open with the question or the intent, then the branch topology, the working location, and whether it states a forecast. Forecast before the work where the engineer gives one, and record what happened against it. Record the verdict selection at the end, where the work has a forecast.
 
 Write the state line as `Open` when `new` writes the record, or as `Active` when `start` writes it, make it `Active` when the work starts, and update it as the state changes. Record each confirmation the lifecycle requires.
 
 ## Compressed
 
-1. `slasher/local/implementations/` holds implementation records, one file per implementation.
-2. A record carries how the implementation started, where it is being worked, and what became of it.
-3. An implementation is a bounded unit of work with a lifecycle.
-4. The record is a persisted, dated artifact, kept after the implementation concludes.
+1. `slasher/local/progressions/` holds progression records, one file per progression.
+2. A record carries how the progression started, where it is being worked, and what became of it.
+3. A progression is a bounded unit of work with a lifecycle.
+4. The record is a persisted, dated artifact, kept after the progression concludes.
 5. An experiment is tagged `[experiment]`, and a feature is tagged `[feature]`. These are ordinary square-bracket tags (see the a-record-may-be-categorized-with-square-bracket-tags rule).
 6. The tags name what the work is. No rule reads them to decide how the work runs.
 7. Either kind opens with a question or an intent, whichever the work has.
-8. Whether the work states a forecast is asked when the implementation is created. Put it to the engineer, and record it as a confirmation beside the working location and the participation.
+8. Whether the work states a forecast is asked when the progression is created. Put it to the engineer, and record it as a confirmation beside the working location and the participation.
 9. Whether the work reaches a verdict is asked at the end, of work with a forecast only, and recorded as a confirmation. The lifecycle reads both. Neither follows from the kind, or from whether the work opens with a question or an intent.
 
 ## The record
 
 1. Open with the **Question** or the **Intent**.
-2. Then give the setup: a `**State:**` line, the upstream branch it merges into, the implementation branch, its base, the working location chosen when the implementation is created, and whether it states a forecast. Add whether it reaches a verdict at the end.
+2. Then give the setup: a `**State:**` line, the upstream branch it merges into, the progression branch, its base, the working location chosen when the progression is created, and whether it states a forecast. Add whether it reaches a verdict at the end.
 3. The upstream branch is `master` or another topic branch.
 4. The setup also includes a `**Tags:**` line carrying `[experiment]` or `[feature]`.
 5. Work with a forecast states it, what is expected to happen, before the work.
@@ -114,9 +114,9 @@ Write the state line as `Open` when `new` writes the record, or as `Active` when
 7. It then records the findings and any post-hoc misses, including outcomes the forecast did not account for.
 8. Work without a forecast records no comparison against one, and no findings or misses. It concludes Completed, unless the engineer concludes it with a verdict word.
 9. Every record carries the confirmations the lifecycle required, so the work's authority is auditable.
-10. Every record carries these: the working-location selection, the attended-or-unattended selection, and the forecast selection, each at the implementation's creation, and the verdict selection at the end where the work has a forecast.
+10. Every record carries these: the working-location selection, the attended-or-unattended selection, and the forecast selection, each at the progression's creation, and the verdict selection at the end where the work has a forecast.
 11. Every record also carries these: adding a worktree to work already under way, and branch deletion with worktree removal.
-12. Work that reaches a verdict also records the affirmation declaration, concluding a superseded implementation, and merging untested code.
+12. Work that reaches a verdict also records the affirmation declaration, concluding a superseded progression, and merging untested code.
 
 ## The state
 
@@ -127,33 +127,33 @@ Write the state line as `Open` when `new` writes the record, or as `Active` when
 5. `Active` is the in-progress state, as it is for an item.
 6. A record without a line is a defect. Absence is not a state.
 7. Do not invent a state word.
-8. `new` creates the branch and writes the record `Open`. `start` makes it `Active`. Where no implementation is in place, `start` creates the branch and writes the record `Active`.
+8. `new` creates the branch and writes the record `Open`. `start` makes it `Active`. Where no progression is in place, `start` creates the branch and writes the record `Active`.
 9. The filename carries no state (see the a-records-file-name-carries-no-state rule).
-10. The state words every implementation takes are these.
+10. The state words every progression takes are these.
     - **Open**: the record and the branch exist, and the work has not started.
     - **Active**: the work is in progress.
     - **Deferred**: kept to do later, with no one working toward it.
     - **Suspended**: paused, not ended.
     - **Discontinued**: stopped, with no plan to do it. It is not current work: the list of current work and the status line leave it out. What it recorded may be merged.
     - **Obsolete**: it lost its relevance over time, with no one deciding.
-    - **Superseded**: replaced by another implementation. Each of the two records names its counterpart. Supersede at any time, without suspending first.
+    - **Superseded**: replaced by another progression. Each of the two records names its counterpart. Supersede at any time, without suspending first.
     - **Abandoned**: dropped before concluding, by decision. It is not merged, and the record is kept.
-11. The concluding words are these, and any implementation takes any of them, whether or not it has a forecast.
+11. The concluding words are these, and any progression takes any of them, whether or not it has a forecast.
     - **Completed**: integrated into the upstream branch. It is the ordinary conclusion.
     - **Affirmed**: the question held, or the intent was met, as forecast where there is one. The engineer declares it.
     - **Refuted**: the question was disproven, or the intent was not met.
     - **Inconclusive**: it ran and gave no clear verdict either way.
-12. The engineer concludes an implementation Affirmed, Refuted, or Inconclusive with `affirm`, `refute`, or `inconclusive`. `complete` concludes work without a forecast as Completed. Where the work has a forecast, ask which concluding word it takes.
-13. Where the implementation is created for an item, make the item Implementation, and name each record in the other. When the implementation is Completed or Affirmed, conclude the item in its kind's concluding state. Otherwise, at its conclusion or when it is set aside, ask the engineer what state the item takes.
-    - Where the item is already on `master`, make each of these state changes on `master` too, not only on the implementation's branch. Commit the same item content and the same log entry on both, so the merge matches.
-14. `resume` takes back any state but Open and Active, to Active. What resuming a Completed implementation does to its merged branch is settled when it first occurs.
-15. Where the engineer asks for an implementation to be concluded and names no state, put the concluding states it can take to the engineer through the selection interface. Do not choose the state, and do not conclude the implementation before the engineer selects one. *Conclude the feature* names no state. *The feature is completed* names one.
+12. The engineer concludes a progression Affirmed, Refuted, or Inconclusive with `affirm`, `refute`, or `inconclusive`. `complete` concludes work without a forecast as Completed. Where the work has a forecast, ask which concluding word it takes.
+13. Where the progression is created for an item, make the item Progression, and name each record in the other. When the progression is Completed or Affirmed, conclude the item in its kind's concluding state. Otherwise, at its conclusion or when it is set aside, ask the engineer what state the item takes.
+    - Where the item is already on `master`, make each of these state changes on `master` too, not only on the progression's branch. Commit the same item content and the same log entry on both, so the merge matches.
+14. `resume` takes back any state but Open and Active, to Active. What resuming a Completed progression does to its merged branch is settled when it first occurs.
+15. Where the engineer asks for a progression to be concluded and names no state, put the concluding states it can take to the engineer through the selection interface. Do not choose the state, and do not conclude the progression before the engineer selects one. *Conclude the feature* names no state. *The feature is completed* names one.
 
 ## Runs
 
 1. Runs are optional.
 2. Only work that reaches a verdict has runs.
-3. Split an implementation into runs only when its question or intent is held fixed and one factor is varied to compare.
+3. Split a progression into runs only when its question or intent is held fixed and one factor is varied to compare.
 4. Each run is its own branch from the same base.
 5. Each run carries its own forecast.
 6. Runs are titled `Run 1`, `Run 2`, and so on.
@@ -163,7 +163,7 @@ Write the state line as `Open` when `new` writes the record, or as `Active` when
 
 1. The same work's design belongs in a loop record under `slasher/local/logs/loops/`.
 2. A loop record holds each cycle's hinge, the options put to the engineer, and the decision.
-3. The implementation record and the loop record divide by concern. Each names the other.
+3. The progression record and the loop record divide by concern. Each names the other.
 4. Keep them as separate files. `slasher/local/logs/loops/` belongs to `design-by-efferent`, which includes `foundation`, not the reverse.
 5. A foundation rule must not require fields in that directory. That dependency is refused.
 6. Naming the loop record in prose is a citation and is permitted. It is the only reference permitted.
@@ -177,7 +177,7 @@ Write the state line as `Open` when `new` writes the record, or as `Active` when
 5. The filename takes the ISO-8601-UTC prefix (see the file-names rule).
 6. The filename carries no state.
 7. End the file with the provenance footer.
-8. Pair the record with a log entry (see the a-log-entry-is-written-for-an-implementation-record-and-the-concluding-entry-depends-on-whether-the-work-merged rule).
+8. Pair the record with a log entry (see the a-log-entry-is-written-for-a-progression-record-and-the-concluding-entry-depends-on-whether-the-work-merged rule).
 
 ## Compression
 
@@ -201,8 +201,11 @@ Write the state line as `Open` when `new` writes the record, or as `Active` when
 - 2026-11-14, revised: `start` creates an implementation Active where none is in place, as point 8 of the state; not re-checked
 - 2026-11-14, revised: the opening questions are asked when the implementation is created, not at the start; not re-checked
 - 2026-11-16, revised: a file name carries no state, which the engineer settled; checked: 49 directives, 49 kept, 0 less precise, 0 lost
+- 2026-11-20, revised: progression replaces implementation in the record sense, a term swap the engineer settled; not re-checked
 
 ## History
+
+Until Fri Nov 20 2026 this rule was named the-implementations-directory-holds-one-record-per-implementation, and said implementation where it now says progression. The progression-replaces-implementation work item settled that progression replaces implementation in the record sense.
 
 Until Mon Nov 16 2026 an implementation record's file name ended with its state in upper case, as `-OPEN` or `-ACTIVE`, and an item already on `master` was renamed there at each state change.
 
@@ -238,10 +241,10 @@ Until Tue Oct 27 2026 this rule called `[experiment]` and `[feature]` reserved t
 
 Related:
 
-- the an-implementation-runs-on-a-branch-to-a-declared-end rule — the lifecycle this records
+- the a-progression-runs-on-a-branch-to-a-declared-end rule — the lifecycle this records
 - the a-record-may-be-categorized-with-square-bracket-tags rule — how a tag is written
 - the a-records-file-name-carries-no-state rule — a file name with no state
-- the the-harness-announces-slashers-installation-and-the-agent-never-prints-the-notice rule — the status line that names an open implementation
+- the the-harness-announces-slashers-installation-and-the-agent-never-prints-the-notice rule — the status line that names an open progression
 - the design-by-efferent a-loop-record-holds-the-cycles-through-the-loop-one-file-per-feature rule — the design record for the same work, which names this one
 - the the-items-directory-holds-one-file-per-item rule — the other record that carries a state, and whose in-progress state is also Active
 
@@ -284,3 +287,4 @@ Changed by Scott Bellware on Sat Nov 14 2026 at 4:02:57 PM PT
 Changed by Scott Bellware on Sat Nov 14 2026 at 4:33:10 PM PT
 Changed by Scott Bellware on Sat Nov 14 2026 at 4:41:56 PM PT
 Changed by Scott Bellware on Mon Nov 16 2026 at 6:36:15 PM PT
+Changed by Scott Bellware on Fri Nov 20 2026 at 12:22:11 AM PT

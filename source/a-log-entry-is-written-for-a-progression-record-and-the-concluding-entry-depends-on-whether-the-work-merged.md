@@ -1,8 +1,8 @@
-# A log entry is written for an implementation record, and the concluding entry depends on whether the work merged
+# A log entry is written for a progression record, and the concluding entry depends on whether the work merged
 
-**Trigger:** When creating an implementation record, or changing its **State:** line
+**Trigger:** When creating a progression record, or changing its **State:** line
 
-An **implementation record** pairs with a one-line entry in `slasher/local/logs/log/`, on creation and on each change of the canonical `**State:**` line.
+An **progression record** pairs with a one-line entry in `slasher/local/logs/log/`, on creation and on each change of the canonical `**State:**` line.
 
 **The concluding entry takes one of two forms**, and which one is not a matter of taste. It is decided by whether the work merged.
 
@@ -15,29 +15,29 @@ An **implementation record** pairs with a one-line entry in `slasher/local/logs/
 
 **A deleted file and an unmerged branch are not the same case.** A file removed from `master` sits in `master`'s own history, and a reader reaches it with `git log --` and a path. That is the ordinary case this system relies on everywhere it says a reader uses git.
 
-**An unmerged branch is deleted on confirmation**, which the an-implementation-runs-on-a-branch-to-a-declared-end rule requires before the branch goes. A record that existed only there is reachable afterward from a reflog entry or a dangling object, on one machine, until it is garbage collected. That is not a record.
+**An unmerged branch is deleted on confirmation**, which the a-progression-runs-on-a-branch-to-a-declared-end rule requires before the branch goes. A record that existed only there is reachable afterward from a reflog entry or a dangling object, on one machine, until it is garbage collected. That is not a record.
 
-**So the states that keep the record as evidence are exactly the states that can lose it.** The the-implementations-directory-holds-one-record-per-implementation rule says a refuted, inconclusive, abandoned, or superseded record is *maintained, marked with the state, so the attempt and its findings survive as evidence*. That sentence assumes the record is somewhere a reader can find. Where the record never reached `master`, the log entry is what makes it true.
+**So the states that keep the record as evidence are exactly the states that can lose it.** The the-progressions-directory-holds-one-record-per-progression rule says a refuted, inconclusive, abandoned, or superseded record is *maintained, marked with the state, so the attempt and its findings survive as evidence*. That sentence assumes the record is somewhere a reader can find. Where the record never reached `master`, the log entry is what makes it true.
 
 **A record committed to `master` while the work is on a branch is the ordinary practice here**, and it is what has kept this from biting. Practice is not the rule, and this rule does not rely on it: the entry carries the substance whenever the branch did not merge, whether or not the record happens to have reached `master` by another route.
 
 ## What is already required, and not restated
 
-**Affirmed work copies its own log into the project's log.** The an-implementation-runs-on-a-branch-to-a-declared-end rule requires it, and that copy is the findings. The summary marker sits beside those entries rather than replacing them.
+**Affirmed work copies its own log into the project's log.** The a-progression-runs-on-a-branch-to-a-declared-end rule requires it, and that copy is the findings. The summary marker sits beside those entries rather than replacing them.
 
-**Work without a verdict has no affirmation and no log copy.** Its completion is not a finding, so a completed implementation's marker is the whole of what its conclusion writes.
+**Work without a verdict has no affirmation and no log copy.** Its completion is not a finding, so a completed progression's marker is the whole of what its conclusion writes.
 
 ## What is not logged
 
 **A confirmation the lifecycle records is not a log entry.** The working-location selection, the attended-or-unattended selection, a worktree added mid-flight, and branch deletion are recorded **in the record**, which is where the run's authority is audited. Logging each would move an audit trail into a log.
 
-**A turn of the work is not a decision.** The hinges, the cycles, and the runs belong to the loop record and the implementation record.
+**A turn of the work is not a decision.** The hinges, the cycles, and the runs belong to the loop record and the progression record.
 
-**Why:** the log is what a reader finds without knowing an implementation ever happened. A record answers *what was tried and what came of it* to someone already holding it. The log answers *what has this project decided* to someone holding nothing.
+**Why:** the log is what a reader finds without knowing a progression ever happened. A record answers *what was tried and what came of it* to someone already holding it. The log answers *what has this project decided* to someone holding nothing.
 
 For a merged record the two are one artifact reachable two ways, and a marker is enough. For an unmerged one they are not, and the difference between a marker and the substance is the difference between a trace and a record.
 
-**How to apply:** when an implementation record is created, write a matching one-line entry. Write one for each change of its `**State:**` line.
+**How to apply:** when a progression record is created, write a matching one-line entry. Write one for each change of its `**State:**` line.
 
 At the conclusion, ask whether the work merged. Where it did, write a summary marker naming the record and its state. Where it did not, write the question or the intent, and the verdict or the outcome. Add the findings where there are any, and for abandoned work the reasoning given for stopping, so `master` holds them without the record.
 
@@ -45,9 +45,9 @@ Write no entry for a confirmation the record already holds, and none for a turn 
 
 ## Compressed
 
-## An implementation record takes a log entry
+## A progression record takes a log entry
 
-1. An implementation record pairs with a one-line entry in `slasher/local/logs/log/`.
+1. A progression record pairs with a one-line entry in `slasher/local/logs/log/`.
 2. Write the entry when the record is created.
 3. Write another entry on each change of the canonical `**State:**` line.
 
@@ -68,7 +68,7 @@ Write no entry for a confirmation the record already holds, and none for a turn 
 
 ## What is already required, and not restated
 
-1. Affirmed work still copies its own log into the project's log, as an-implementation-runs-on-a-branch-to-a-declared-end rule requires.
+1. Affirmed work still copies its own log into the project's log, as a-progression-runs-on-a-branch-to-a-declared-end rule requires.
 2. The summary marker sits beside those copied entries. It does not replace them.
 3. Work without a verdict has no affirmation and no log copy. Completed work's marker is the whole of what its conclusion writes.
 
@@ -77,7 +77,7 @@ Write no entry for a confirmation the record already holds, and none for a turn 
 1. Write no log entry for a confirmation the lifecycle records.
 2. Those confirmations are the working-location selection, the attended-or-unattended selection, a worktree added mid-flight, and branch deletion. They are recorded in the record.
 3. Write no log entry for a turn of the work.
-4. The hinges, the cycles, and the runs belong to the loop record and the implementation record.
+4. The hinges, the cycles, and the runs belong to the loop record and the progression record.
 
 ## Compression
 
@@ -88,8 +88,11 @@ Write no entry for a confirmation the record already holds, and none for a turn 
 - 2026-10-28, revised: Why points removed, solubility 54 → 58, clarity 0.72 → 0.70; checked: 20 directives, 20 kept, 0 less precise, 0 lost
 - 2026-10-29, merge from master re-checked: 16 directives, 16 kept, 0 less precise, 0 lost, 0 repairs
 - 2026-10-29, revised: entries worded by the verdict, whatever the kind; checked: 19 directives, 17 kept, 2 less precise, 0 lost, 2 repairs; re-checked: 19 directives, 19 kept, 0 less precise, 0 lost
+- 2026-11-20, revised: progression replaces implementation in the record sense, a term swap the engineer settled; not re-checked
 
 ## History
+
+Until Fri Nov 20 2026 this rule was named a-log-entry-is-written-for-an-implementation-record-and-the-concluding-entry-depends-on-whether-the-work-merged, and said implementation where it now says progression. The progression-replaces-implementation work item settled that progression replaces implementation in the record sense.
 
 Until Thu Oct 29 2026 the concluding entry was worded by kind: an affirmed experiment or a completed feature merged, and an experiment's verdict was its finding. The engineer settled that the verdict is chosen at the start, whatever the kind, so the entry is worded by verdict.
 
@@ -103,8 +106,8 @@ Until Mon Oct 26 2026 this rule was named an-implementation-record-takes-a-log-e
 
 Related:
 
-- the the-implementations-directory-holds-one-record-per-implementation rule — the record, the two kinds, and the state words each takes
-- the an-implementation-runs-on-a-branch-to-a-declared-end rule — the merge, and the branch deletion that makes an unmerged record unreachable
+- the the-progressions-directory-holds-one-record-per-progression rule — the record, the two kinds, and the state words each takes
+- the a-progression-runs-on-a-branch-to-a-declared-end rule — the merge, and the branch deletion that makes an unmerged record unreachable
 - the a-log-entry-is-written-for-an-item-on-creation-on-each-settled-resolution-and-on-a-change-of-state rule — the same shape for an item, which is never on a branch that is deleted and so has no equivalent fork
 - the the-log-holds-one-file-per-entry-with-a-one-line-title rule — the entry's form, and the general trigger this makes specific
 
@@ -136,3 +139,4 @@ Changed by Scott Bellware on Sun Oct 25 2026 at 2:26:56 PM PT
 Changed by Scott Bellware on Mon Oct 26 2026 at 2:41:43 PM PT
 Changed by Scott Bellware on Thu Oct 29 2026 at 10:40:45 PM PT
 Changed by Scott Bellware on Fri Nov 6 2026 at 8:47:18 PM PT
+Changed by Scott Bellware on Fri Nov 20 2026 at 12:22:11 AM PT

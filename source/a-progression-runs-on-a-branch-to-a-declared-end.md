@@ -1,22 +1,22 @@
-# An implementation runs on a branch to a declared end
+# A progression runs on a branch to a declared end
 
-**Trigger:** When creating, starting, adding a worktree to, suspending, or concluding an experiment or feature implementation
+**Trigger:** When creating, starting, adding a worktree to, suspending, or concluding an experiment or feature progression
 
 - **Solubility:** 21
 - **Original rank:** 6 of 106
 - **Unclarity:** 0.58
 
-An implementation is bounded work with a lifecycle. It runs on a branch created for it, it is designed through the five hinges, and it reaches one of a fixed set of declared states. It is never left silently open.
+A progression is bounded work with a lifecycle. It runs on a branch created for it, it is designed through the five hinges, and it reaches one of a fixed set of declared states. It is never left silently open.
 
-**Whether the work states a forecast decides the parts that differ while it runs, and whether it reaches a verdict is asked at its end. The tag decides neither.** Either kind opens with a question or an intent. A forecast is stated when the implementation is created only where the engineer gives one. Only work with a forecast is asked the verdict question, and the engineer can conclude any work with a verdict word (see the the-implementations-directory-holds-one-record-per-implementation rule). Every clause below that names work with a forecast, or work with or without a verdict, names it because of those two. No clause varies by kind. The tag names the branch and the record, and nothing else.
+**Whether the work states a forecast decides the parts that differ while it runs, and whether it reaches a verdict is asked at its end. The tag decides neither.** Either kind opens with a question or an intent. A forecast is stated when the progression is created only where the engineer gives one. Only work with a forecast is asked the verdict question, and the engineer can conclude any work with a verdict word (see the the-progressions-directory-holds-one-record-per-progression rule). Every clause below that names work with a forecast, or work with or without a verdict, names it because of those two. No clause varies by kind. The tag names the branch and the record, and nothing else.
 
 **As the engineer stated it:** change features and experiments so that both can have either an intent or a question.
 
 ## The branch
 
-**`new` writes the record `Open`, then creates the branch.** `start` makes the record `Active` when the work starts. Where no implementation is in place, `start` creates it as `new` does, and writes the record `Active`.
+**`new` writes the record `Open`, then creates the branch.** `start` makes the record `Active` when the work starts. Where no progression is in place, `start` creates it as `new` does, and writes the record `Active`.
 
-**The first record is committed on the upstream branch before the implementation branch is created.** `new` writes the record `Open`, or `start` writes it `Active` where it creates the implementation, with its log entry, and commits both on the upstream branch, `master` in the ordinary case. Then it creates the implementation branch from that commit. The implementation branch's copy of the record takes every update made during the work. Its first update records the base, the commit holding the first record, which that record cannot name itself. The upstream branch's copy stays as first written until the work merges, so the upstream branch shows the implementation as current while it runs. Where the working location is the current branch, the record is written there, and there is no second copy.
+**The first record is committed on the upstream branch before the progression branch is created.** `new` writes the record `Open`, or `start` writes it `Active` where it creates the progression, with its log entry, and commits both on the upstream branch, `master` in the ordinary case. Then it creates the progression branch from that commit. The progression branch's copy of the record takes every update made during the work. Its first update records the base, the commit holding the first record, which that record cannot name itself. The upstream branch's copy stays as first written until the work merges, so the upstream branch shows the progression as current while it runs. Where the working location is the current branch, the record is written there, and there is no second copy.
 
 **As the engineer stated it:** When an implementation starts, an initial implementation record should be recorded on master. Then the branch is made, and the branch's version takes updates added during the course of the implementation, but the initial record remains on master
 
@@ -28,23 +28,23 @@ An implementation is bounded work with a lifecycle. It runs on a branch created 
 
 **The worktree segment is an exception to the upstream clause, and it is one deliberately.** The upstream target is kept out of the name because a name that goes stale misleads, and a worktree can be added or removed the same way. What separates them is where each fact is asked about. An upstream target is asked about when the work is merged, and the record is open at that moment. The existence of a worktree is asked about in `git branch`, where the record is not. So the one that has no other answer at the point of asking is the one the name carries — and the rename is what keeps it from becoming the stale name the other clause refuses.
 
-## An implementation in phases
+## A progression in phases
 
-**An experiment or a feature may run in phases.** Each phase is a question or an intent of its own that serves the implementation's. The record names the phases and their order when the implementation is created, and, as each phase starts, the commit it branched from. **Whether a phase states a forecast is asked when it is created, by `/phase new`**, whatever its implementation chose, with the options the implementation's forecast question has: *No forecast*, then *State a forecast*. A phase with a forecast states it before its work, and a phase without one states none. **A phase with a forecast is asked the verdict question when its work is complete**, with the implementation's three options. A phase without one concludes Completed, unasked. **As the engineer stated it:** chosen per phase.
+**An experiment or a feature may run in phases.** Each phase is a question or an intent of its own that serves the progression's. The record names the phases and their order when the progression is created, and, as each phase starts, the commit it branched from. **Whether a phase states a forecast is asked when it is created, by `/phase new`**, whatever its progression chose, with the options the progression's forecast question has: *No forecast*, then *State a forecast*. A phase with a forecast states it before its work, and a phase without one states none. **A phase with a forecast is asked the verdict question when its work is complete**, with the progression's three options. A phase without one concludes Completed, unasked. **As the engineer stated it:** chosen per phase.
 
 **As the engineer stated it:** features should have phases as well.
 
-- **A phase's branch is the implementation's branch name, a dot, and the phase's name** — `experiment/rule-reduction.flattening`, `feature/worktree/skills.slash-commands`. A slash cannot join them: git refuses a branch named beneath another branch's name, so `experiment/rule-reduction/flattening` cannot exist beside `experiment/rule-reduction`. The `worktree/` segment, where the implementation has one, carries into each phase's name.
-- **A phase branches from the implementation's branch and concludes into it.** Where the phase is concluded with a verdict, it is affirmed, refuted, or inconclusive on the engineer's declaration, and an affirmed phase merges back into the implementation's branch. The record carries each phase's verdict and findings. Where the phase is concluded without a verdict, or has no forecast, it concludes **Completed** and merges back into the implementation's branch, with no verdict.
-- **A phase's commits are squashed when the implementation concludes, not when the phase does.** While the work runs, a phase merges with its history, with `git merge --no-ff`, so the merge commit marks where it ends and its separate commits can be read on the implementation's branch. When the implementation concludes, and before it merges to its upstream branch, its branch is rebuilt so that each merged phase is one squashed commit, in the phases' order. Each phase's `--no-ff` merge commit is dropped, since its squashed commit takes its place. The rebuild reads each phase's commits from the commit the record names as its start to the phase's branch. A commit made on the implementation's branch outside any phase keeps its content and its message, in its place. Its SHA changes, since its parent does. Where the branch was pushed, the rebuilt branch is force-pushed with `--force-with-lease` against the pushed tip, which waits for the engineer's selection as every push does.
+- **A phase's branch is the progression's branch name, a dot, and the phase's name** — `experiment/rule-reduction.flattening`, `feature/worktree/skills.slash-commands`. A slash cannot join them: git refuses a branch named beneath another branch's name, so `experiment/rule-reduction/flattening` cannot exist beside `experiment/rule-reduction`. The `worktree/` segment, where the progression has one, carries into each phase's name.
+- **A phase branches from the progression's branch and concludes into it.** Where the phase is concluded with a verdict, it is affirmed, refuted, or inconclusive on the engineer's declaration, and an affirmed phase merges back into the progression's branch. The record carries each phase's verdict and findings. Where the phase is concluded without a verdict, or has no forecast, it concludes **Completed** and merges back into the progression's branch, with no verdict.
+- **A phase's commits are squashed when the progression concludes, not when the phase does.** While the work runs, a phase merges with its history, with `git merge --no-ff`, so the merge commit marks where it ends and its separate commits can be read on the progression's branch. When the progression concludes, and before it merges to its upstream branch, its branch is rebuilt so that each merged phase is one squashed commit, in the phases' order. Each phase's `--no-ff` merge commit is dropped, since its squashed commit takes its place. The rebuild reads each phase's commits from the commit the record names as its start to the phase's branch. A commit made on the progression's branch outside any phase keeps its content and its message, in its place. Its SHA changes, since its parent does. Where the branch was pushed, the rebuilt branch is force-pushed with `--force-with-lease` against the pushed tip, which waits for the engineer's selection as every push does.
 - **The squashed commit's subject summarizes what the phase built**, under the commit-message rules. Its body lists the phase's own commit subjects, oldest first, each on its own line after a dash, as `- Receipt tax rate`, so their history survives in the message. A refuted or inconclusive phase does not merge, so nothing of it is squashed.
-- **A phase's branch is kept until the implementation concludes**, since the rebuild reads each phase's commits from it. It is deleted with the implementation's branch, under the same one confirmation.
-- **The implementation concludes after its phases**, and only then merges to its upstream branch. A phase's commits reach no other branch.
-- **One phase runs at a time, in the order the record names**, each starting from the implementation's branch as the phases before it left it.
+- **A phase's branch is kept until the progression concludes**, since the rebuild reads each phase's commits from it. It is deleted with the progression's branch, under the same one confirmation.
+- **The progression concludes after its phases**, and only then merges to its upstream branch. A phase's commits reach no other branch.
+- **One phase runs at a time, in the order the record names**, each starting from the progression's branch as the phases before it left it.
 
-## The working location, chosen when the implementation is created
+## The working location, chosen when the progression is created
 
-**Put it through the selection interface each time an implementation is created, with no standing default.** The trade is situational: work that resolves in a sitting favours branch only, and work that has to coexist with other work favours a worktree.
+**Put it through the selection interface each time a progression is created, with no standing default.** The trade is situational: work that resolves in a sitting favours branch only, and work that has to coexist with other work favours a worktree.
 
 **Each option states what it creates:**
 
@@ -70,13 +70,13 @@ An implementation is bounded work with a lifecycle. It runs on a branch created 
 
 **The working location changes on two triggers, and only by adding a worktree.** One is external: other work arrives that the engineer intends to work alongside this. One is internal — the work is **escalated**, judged to need more isolation than the single working tree gives it, having proved larger than it was taken for. Either way the addition is confirmed and recorded, the record **gains a line** rather than having its original rewritten, and the conclusion dispatches on the current location. Collapsing a worktree back has no motivation and is not done.
 
-## The human's level of participation, chosen when the implementation is created
+## The human's level of participation, chosen when the progression is created
 
 **Attended or unattended, put through the selection interface beside the working location.** Attended is the default. See the design-by-efferent attended-or-unattended-is-chosen-when-the-work-is-created rule, which states why the two sit at one gate and what changes between them.
 
 ## The forecast at creation, and the verdict at the end
 
-**When the implementation is created, ask whether the work states a forecast, beside the working location and the participation, and record the answer as a confirmation.** A forecast is what is expected to happen, stated before the work. Its two options read *No forecast*, then *State a forecast*, in that order. Where the engineer states one, write it in the record. Where the working location is the current branch, do not ask: work there states none. Whether the work states a forecast follows neither the kind nor whether it opens with a question or an intent.
+**When the progression is created, ask whether the work states a forecast, beside the working location and the participation, and record the answer as a confirmation.** A forecast is what is expected to happen, stated before the work. Its two options read *No forecast*, then *State a forecast*, in that order. Where the engineer states one, write it in the record. Where the working location is the current branch, do not ask: work there states none. Whether the work states a forecast follows neither the kind nor whether it opens with a question or an intent.
 
 **At the end, ask the verdict question of work with a forecast, and of no other work.** It is asked when the work is complete, through the selection interface, and recorded as a confirmation. **Its two options read, in these words and in this order:** *Conclude without an engineer's verdict*, then *Conclude with an engineer's verdict*. A verdict is the engineer's declaration, so the options name whose it is. Work concluded without a verdict concludes Completed. Work concluded with one concludes Affirmed, Refuted, or Inconclusive, on the engineer's declaration. Work without a forecast is not asked. `complete` concludes it Completed, and the engineer can conclude it Affirmed, Refuted, or Inconclusive instead.
 
@@ -88,7 +88,7 @@ An implementation is bounded work with a lifecycle. It runs on a branch created 
 
 ## The end
 
-**Every implementation ends in a declared state**, or is suspended, which is paused rather than ended. The words are the the-implementations-directory-holds-one-record-per-implementation rule's.
+**Every progression ends in a declared state**, or is suspended, which is paused rather than ended. The words are the the-progressions-directory-holds-one-record-per-progression rule's.
 
 **Work that reaches a verdict is affirmed only on the engineer's explicit declaration.** On affirmation its log is **copied into the project log**, so the durable record carries what it established. Where it produced implementation, the branch also merges to the upstream branch — waiting on the tests, and on specific confirmation where no test covers what was built. Observation-only work has nothing to merge, and affirmation is the log copy alone.
 
@@ -98,13 +98,13 @@ An implementation is bounded work with a lifecycle. It runs on a branch created 
 
 **Refuted, inconclusive, abandoned, and superseded keep the record and do not merge.** The record is maintained and marked, so the attempt and its findings survive as evidence.
 
-**An implementation can be superseded at any time, without first being suspended.** Its branch is kept until the engineer confirms its deletion. The two records name the counterpart.
+**A progression can be superseded at any time, without first being suspended.** Its branch is kept until the engineer confirms its deletion. The two records name the counterpart.
 
 **A child supersedes its parent by preserving it.** Work created from another's branch already holds that history. The child merges the parent first, which brings over every commit the parent made after the child was created from it and makes deleting the parent branch lossless. Then the parent is parked `Superseded`, the records name each other, the child's upstream becomes what the parent's was, and the parent branch is deleted on confirmation. **This is the one supersession that merges the superseded branch**, because a child already contains its parent and refusing the merge would discard the parent's last commits rather than preserve them.
 
 **Conclude in the main working tree, on the upstream branch.** With branch only, the working tree switches back. Under a worktree the main working tree never left it, so the session must end there rather than in a directory that has been removed. On the current branch there is nowhere to return from.
 
-**Branch deletion is engineer-confirmed, put through the selection interface, and the worktree is removed first.** Git refuses to delete a branch checked out in a worktree, and **one confirmation covers the two**, and the phase branches the implementation kept — a single cleanup act with a forced order, which splitting would prompt twice for. A squashed phase's branch is deleted with `git branch -D`, since its own commits never reached the upstream branch and git refuses `-d`. Where the implementation's branch was pushed, the deletion covers its branch on the remote too, and that branch is deleted only after the upstream branch holding the work has been pushed. Deleting it sooner leaves the remote holding the work on no branch. Suspension never deletes and never removes a worktree.
+**Branch deletion is engineer-confirmed, put through the selection interface, and the worktree is removed first.** Git refuses to delete a branch checked out in a worktree, and **one confirmation covers the two**, and the phase branches the progression kept — a single cleanup act with a forced order, which splitting would prompt twice for. A squashed phase's branch is deleted with `git branch -D`, since its own commits never reached the upstream branch and git refuses `-d`. Where the progression's branch was pushed, the deletion covers its branch on the remote too, and that branch is deleted only after the upstream branch holding the work has been pushed. Deleting it sooner leaves the remote holding the work on no branch. Suspension never deletes and never removes a worktree.
 
 ## The agent never raises the end of work with a forecast
 
@@ -116,11 +116,11 @@ An implementation is bounded work with a lifecycle. It runs on a branch created 
 
 ## Drift, and the one lifecycle change the agent does raise
 
-**While work with a forecast is open under branch only, watch for main-sequence work starting**, and surface it rather than letting the branches silently diverge. Offer two recourses through the selection interface — **suspend the implementation**, where the intent is to stop working it for now, or **add a worktree**, where the intent is to keep working it alongside. Neither ends the implementation, and the engineer's intent decides.
+**While work with a forecast is open under branch only, watch for main-sequence work starting**, and surface it rather than letting the branches silently diverge. Offer two recourses through the selection interface — **suspend the progression**, where the intent is to stop working it for now, or **add a worktree**, where the intent is to keep working it alongside. Neither ends the progression, and the engineer's intent decides.
 
 **What the watch rests on, stated plainly:** the branch name, which the status line carries every turn, and a judgment of whether the work at hand serves the recorded question or intent. Only the first is mechanical, and a missed detection produces nothing at all — no alarm, no artifact, just the divergence. It is a practice, not a guarantee.
 
-**Under a worktree there is nothing to diverge and nothing to notice.** The main working tree stays on the upstream branch and the implementation leaves no trace in it, so the configuration that isolates best is the one that most easily loses track. That is what the status line's second line answers, naming the branch of an implementation that has not concluded, in any worktree.
+**Under a worktree there is nothing to diverge and nothing to notice.** The main working tree stays on the upstream branch and the progression leaves no trace in it, so the configuration that isolates best is the one that most easily loses track. That is what the status line's second line answers, naming the branch of a progression that has not concluded, in any worktree.
 
 **There is no counterpart for work without a forecast.** Other work during it is ordinary rather than a problem, so there is nothing to detect. Work being forgotten is covered by the same line.
 
@@ -128,7 +128,7 @@ An implementation is bounded work with a lifecycle. It runs on a branch created 
 
 Stating the shared lifecycle once and conditioning six clauses on the verdict choice is smaller than stating it twice, and it makes the asymmetry legible instead of leaving a reader to diff two rules to find it.
 
-**How to apply:** branch for every implementation, named for its tag. Record the upstream branch, the branch, and the base. Ask the working location, the participation level, and whether the work states a forecast when the implementation is created, through the selection interface, and record all three. Offer the current branch last, and ask no forecast there. Ask the verdict question at the end, of work with a forecast only. Before work that reaches a verdict merges, write on its branch the rules and changes master needs to conform to it.
+**How to apply:** branch for every progression, named for its tag. Record the upstream branch, the branch, and the base. Ask the working location, the participation level, and whether the work states a forecast when the progression is created, through the selection interface, and record all three. Offer the current branch last, and ask no forecast there. Ask the verdict question at the end, of work with a forecast only. Before work that reaches a verdict merges, write on its branch the rules and changes master needs to conform to it.
 
 Follow DBE inside. End in a declared state. Copy affirmed work's log into the project's log and merge where it produced implementation. Verify work without a verdict before integrating and add no gate at the merge.
 
@@ -136,15 +136,15 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 
 ## Compressed
 
-1. An implementation runs on its own branch, designed through the five hinges by DBE, to a declared state.
+1. A progression runs on its own branch, designed through the five hinges by DBE, to a declared state.
 2. It is never left silently open.
 3. Whether the work states a forecast decides the parts that differ while it runs. Whether it reaches a verdict is asked at its end. The tag names the record and the branch, and decides nothing else.
-4. Either kind opens with a question or an intent. A forecast is stated when the implementation is created only where the engineer gives one. Only work with a forecast is asked the verdict question, and the engineer can conclude any work with a verdict word (see the the-implementations-directory-holds-one-record-per-implementation rule).
+4. Either kind opens with a question or an intent. A forecast is stated when the progression is created only where the engineer gives one. Only work with a forecast is asked the verdict question, and the engineer can conclude any work with a verdict word (see the the-progressions-directory-holds-one-record-per-progression rule).
 5. A clause below names work with a forecast, or with or without a verdict, only because of that difference. Every other clause holds for all.
 
 ## The branch
 
-1. `new` writes the record `Open`, then creates the branch. `start` makes it `Active`. Where no implementation is in place, `start` creates it as `new` does, and writes the record `Active`.
+1. `new` writes the record `Open`, then creates the branch. `start` makes it `Active`. Where no progression is in place, `start` creates it as `new` does, and writes the record `Active`.
 2. Name it `experiment/<subject>` or `feature/<subject>`, matching the tag.
 3. The subject is short, lower-case, and dash-separated, and names literally what is tested or built.
 4. Add `-run-<n>` only where the work has more than one run.
@@ -158,35 +158,35 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 12. Record the branch, its upstream, and its base. Record the base as its commit SHA and the ref it came from.
 13. Make no git tag for the base.
 14. A later run branches from the recorded commit.
-15. Except on the current branch, `new`, or `start` where it creates the implementation, commits the first record, `Open` or `Active`, and its log entry on the upstream branch, `master` in the ordinary case, then creates the implementation branch from that commit.
-16. Make every later update to the record on the implementation branch. The first records the base, the commit that holds the first record, which that record cannot name. Leave the upstream branch's copy as first written until the work merges.
+15. Except on the current branch, `new`, or `start` where it creates the progression, commits the first record, `Open` or `Active`, and its log entry on the upstream branch, `master` in the ordinary case, then creates the progression branch from that commit.
+16. Make every later update to the record on the progression branch. The first records the base, the commit that holds the first record, which that record cannot name. Leave the upstream branch's copy as first written until the work merges.
 17. Where the working location is the current branch, write the record there. There is no second copy.
 
 ## Phases
 
-1. An experiment or a feature may run in phases. Each phase is a question or an intent that serves the implementation's.
-2. The record names the phases and their order when the implementation is created, and, as each phase starts, the commit it branched from.
-3. When a phase is created, by `/phase new`, ask whether it states a forecast, whatever its implementation chose: *No forecast*, then *State a forecast*. A phase with a forecast states it before its work. When its work is complete, ask it the verdict question, with the implementation's three options. A phase without a forecast is not asked.
-4. A phase's branch is the implementation's branch, a dot, and the phase's name: `experiment/rule-reduction.flattening`, `feature/worktree/skills.slash-commands`.
+1. An experiment or a feature may run in phases. Each phase is a question or an intent that serves the progression's.
+2. The record names the phases and their order when the progression is created, and, as each phase starts, the commit it branched from.
+3. When a phase is created, by `/phase new`, ask whether it states a forecast, whatever its progression chose: *No forecast*, then *State a forecast*. A phase with a forecast states it before its work. When its work is complete, ask it the verdict question, with the progression's three options. A phase without a forecast is not asked.
+4. A phase's branch is the progression's branch, a dot, and the phase's name: `experiment/rule-reduction.flattening`, `feature/worktree/skills.slash-commands`.
 5. Git refuses a slash here, because no branch can sit beneath another branch's name.
 6. A `worktree/` segment carries into each phase's name.
-7. A phase branches from the implementation's branch and concludes into it.
+7. A phase branches from the progression's branch and concludes into it.
 8. Where the phase is concluded with a verdict, it is affirmed, refuted, or inconclusive only on the engineer's declaration.
-9. An affirmed phase merges back into the implementation's branch.
+9. An affirmed phase merges back into the progression's branch.
 10. The record carries each phase's verdict and findings.
-11. Where the phase is concluded without a verdict, or has no forecast, it concludes Completed, with no verdict, and merges back into the implementation's branch.
-12. One phase runs at a time, in the record's order, each from the implementation's branch as the earlier phases left it.
+11. Where the phase is concluded without a verdict, or has no forecast, it concludes Completed, with no verdict, and merges back into the progression's branch.
+12. One phase runs at a time, in the record's order, each from the progression's branch as the earlier phases left it.
 13. A phase's commits reach no other branch.
-14. The implementation concludes after its phases, and only then merges to its upstream branch.
-15. Merge a concluded phase with `git merge --no-ff`. Squash a phase's commits when the implementation concludes, not when the phase does. Read each phase's commits from the start the record names to the phase's branch. Drop each phase's `--no-ff` merge commit, since its squashed commit takes its place. Before the implementation merges to its upstream branch, rebuild its branch so each merged phase is one squashed commit, in the phases' order.
+14. The progression concludes after its phases, and only then merges to its upstream branch.
+15. Merge a concluded phase with `git merge --no-ff`. Squash a phase's commits when the progression concludes, not when the phase does. Read each phase's commits from the start the record names to the phase's branch. Drop each phase's `--no-ff` merge commit, since its squashed commit takes its place. Before the progression merges to its upstream branch, rebuild its branch so each merged phase is one squashed commit, in the phases' order.
 16. A commit made outside any phase keeps its content and its message, in its place. Its SHA changes. Where the branch was pushed, force-push the rebuilt branch with `--force-with-lease` against the pushed tip, on the engineer's selection.
 17. The squashed commit's subject summarizes what the phase built, under the commit-message rules. Its body lists the phase's own commit subjects, oldest first, each on its own line after a dash.
 18. A refuted or inconclusive phase does not merge, so nothing of it is squashed.
-19. Keep a phase's branch until the implementation concludes. Delete it with the implementation's branch.
+19. Keep a phase's branch until the progression concludes. Delete it with the progression's branch.
 
 ## The working location
 
-1. Put the working location through the selection interface each time an implementation is created, with no default.
+1. Put the working location through the selection interface each time a progression is created, with no default.
 2. Each option states what it creates:
 
 > **Branch only** — Create the branch and switch this working tree to it. At the conclusion this
@@ -207,7 +207,7 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 8. On the current branch, the record still carries the intent, the state, and the confirmations.
 9. Place a worktree beside the repository directory, named `<repository-name>-<branch, each slash as a dash>`, as in `slasher-experiment-state-suffix-legibility`.
 10. A worktree inside the repository would show as untracked content in the work's own `git status`.
-11. Create a branch-only implementation with `git switch -c <branch>`, and a worktree implementation with `git worktree add -b <branch> <path>`, where `-b` is required.
+11. Create a branch-only progression with `git switch -c <branch>`, and a worktree progression with `git worktree add -b <branch> <path>`, where `-b` is required.
 12. Use `git worktree add <path> <branch>` only to add a worktree to work under way, since it fails on a branch that does not exist.
 13. Change the location only by adding a worktree.
 14. Add one only on one of two triggers: other work arrives that the engineer means to work alongside.
@@ -226,7 +226,7 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 
 ## The forecast and the verdict
 
-1. When the implementation is created, ask whether the work states a forecast, through the selection interface, beside the working location and the participation. Its options read *No forecast*, then *State a forecast*, in that order. Record the answer as a confirmation, and write a stated forecast in the record.
+1. When the progression is created, ask whether the work states a forecast, through the selection interface, beside the working location and the participation. Its options read *No forecast*, then *State a forecast*, in that order. Record the answer as a confirmation, and write a stated forecast in the record.
 2. Do not ask it where the working location is the current branch. Work there states no forecast.
 3. Whether the work states a forecast follows neither the kind nor whether it opens with a question or an intent.
 4. At the end, when the work is complete, ask the verdict question of work with a forecast, and of no other work. Record the answer as a confirmation.
@@ -237,8 +237,8 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 
 ## The end
 
-1. Every implementation ends in a declared state, or is suspended, which pauses it.
-2. The words are the the-implementations-directory-holds-one-record-per-implementation rule's.
+1. Every progression ends in a declared state, or is suspended, which pauses it.
+2. The words are the the-progressions-directory-holds-one-record-per-progression rule's.
 3. Work that reaches a verdict is affirmed only on the engineer's explicit declaration.
 4. On affirmation, its log is copied into the project log.
 5. Where it produced implementation, its branch merges to the upstream branch, after the tests pass.
@@ -250,8 +250,8 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 11. Work without a verdict has no affirmation.
 12. Refuted, inconclusive, abandoned, and superseded work keeps its record, marked with its state, so the attempt and its findings survive.
 13. Refuted, inconclusive, abandoned, and superseded work does not merge.
-14. Supersede an implementation at any time, without suspending it first.
-15. Keep the superseded implementation's branch until the engineer confirms its deletion.
+14. Supersede a progression at any time, without suspending it first.
+15. Keep the superseded progression's branch until the engineer confirms its deletion.
 16. The two records name each other.
 17. A child supersedes its parent by preserving it.
 18. The child merges the parent first, taking every commit the parent made after the child branched.
@@ -263,7 +263,7 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 24. Under branch only, the working tree switches back.
 25. Under a worktree, end the session in the main working tree, never in the removed directory.
 26. On the current branch there is nothing to return from.
-27. Branch deletion takes one confirmation from the engineer, through the selection interface. It covers the worktree removal, the kept phase branches, and the implementation's branch on the remote where it was pushed. Delete the remote branch only after the upstream branch holding the work has been pushed. Do not prompt twice. Delete a squashed phase's branch with `git branch -D`, since git refuses `-d` for it.
+27. Branch deletion takes one confirmation from the engineer, through the selection interface. It covers the worktree removal, the kept phase branches, and the progression's branch on the remote where it was pushed. Delete the remote branch only after the upstream branch holding the work has been pushed. Do not prompt twice. Delete a squashed phase's branch with `git branch -D`, since git refuses `-d` for it.
 28. Remove the worktree first, since git refuses to delete a branch checked out in a worktree.
 29. Suspension deletes no branch and removes no worktree.
 
@@ -277,11 +277,11 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 ## Drift
 
 1. While work with a forecast is open under branch only, watch for main-sequence work starting, and surface it.
-2. Offer two recourses through the selection interface: suspend the implementation, where the intent is to stop working it for now, or add a worktree, where the intent is to keep working it alongside.
-3. Neither recourse ends the implementation, and the engineer's intent decides.
+2. Offer two recourses through the selection interface: suspend the progression, where the intent is to stop working it for now, or add a worktree, where the intent is to keep working it alongside.
+3. Neither recourse ends the progression, and the engineer's intent decides.
 4. The watch rests on the branch name in the status line and on a judgment of whether the work serves the recorded question or intent.
 5. The watch is a practice, not a guarantee.
-6. Under a worktree there is nothing to watch. The status line's second line names the branch of an implementation that has not concluded, in any worktree.
+6. Under a worktree there is nothing to watch. The status line's second line names the branch of a progression that has not concluded, in any worktree.
 7. Work without a forecast has no watch, since starting other work during it is ordinary.
 
 ## Compression
@@ -314,8 +314,11 @@ Raise no ending for work with a forecast. Leave the engineer on the upstream bra
 - 2026-11-14, revised: the opening questions are asked when the implementation is created, not at the start; not re-checked
 - 2026-11-15, revised: a phase is created by `/phase new`, where it was added, as point 3 of the phases; not re-checked
 - 2026-11-15, revised: *conclude* replaces *finish*; not re-checked
+- 2026-11-20, revised: progression replaces implementation in the record sense, a term swap the engineer settled; not re-checked
 
 ## History
+
+Until Fri Nov 20 2026 this rule was named an-implementation-runs-on-a-branch-to-a-declared-end, and said implementation where it now says progression. The progression-replaces-implementation work item settled that progression replaces implementation in the record sense.
 
 Until Sun Nov 15 2026 this rule said *finish* where it now says *conclude*. The begin, start, end, conclude work item settled that *conclude* replaces *finish*.
 
@@ -361,9 +364,9 @@ Until Mon Oct 26 2026 this rule restated why attended or unattended sits at one 
 
 Related:
 
-- the the-implementations-directory-holds-one-record-per-implementation rule — the record, the tags, and the state words
+- the the-progressions-directory-holds-one-record-per-progression rule — the record, the tags, and the state words
 - the design-by-efferent attended-or-unattended-is-chosen-when-the-work-is-created and the-hinge-cycle-is-actuation-observation-controls-implementation-and-naming rules
-- the the-harness-announces-slashers-installation-and-the-agent-never-prints-the-notice rule — the status line naming the implementation under way
+- the the-harness-announces-slashers-installation-and-the-agent-never-prints-the-notice rule — the status line naming the progression under way
 - the `git` run-the-test-suite-after-changes-before-considering-whether-to-commit and announce-a-branch-switch-in-a-bordered-block rules
 - the a-phase-starts-by-stating-its-goal rule — what is said when a phase starts
 
@@ -422,3 +425,4 @@ Changed by Scott Bellware on Sat Nov 14 2026 at 4:33:10 PM PT
 Changed by Scott Bellware on Sat Nov 14 2026 at 4:41:56 PM PT
 Changed by Scott Bellware on Sat Nov 14 2026 at 5:13:11 PM PT
 Changed by Scott Bellware on Sat Nov 14 2026 at 5:36:24 PM PT
+Changed by Scott Bellware on Fri Nov 20 2026 at 12:22:14 AM PT
